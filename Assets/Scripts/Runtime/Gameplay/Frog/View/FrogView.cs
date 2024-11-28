@@ -18,6 +18,9 @@ namespace Runtime.Gameplay.Frog.View
         public Action OnTongueAnimationStart;
         
         public Action OnTongueAnimationEnd;
+        
+        [SerializeField]
+        private GameObject destroyParticle;
 
         private void OnMouseDown()
         {
@@ -47,14 +50,29 @@ namespace Runtime.Gameplay.Frog.View
             await UniTask.Delay(TimeSpan.FromSeconds(Constants.FROG_CLICK_ANIMATION_DURATION));
         }
         
-        public void ScaleDown()
+        public async void ScaleDown()
         {
-            AnimateScaleToZero(transform, 0, Constants.FROG_CLICK_SCALE_DURATION);
+            try
+            {
+                AnimateScaleToZero(transform, 0, Constants.FROG_CLICK_SCALE_DURATION);
+                await UniTask.Delay(TimeSpan.FromSeconds(Constants.FROG_CLICK_ANIMATION_DURATION));
+                DestroyParticle();
+            }
+            
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
         
         public void CellScaleDown()
         {
             AnimateScaleToZero(CellViewBelow.transform, 0, Constants.CELL_SCALE_DOWN_DURATION,true);
+        }
+        
+        private void DestroyParticle()
+        {
+            Instantiate(destroyParticle, transform.position, Quaternion.identity);
         }
     }
 }

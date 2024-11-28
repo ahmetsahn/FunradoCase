@@ -102,7 +102,7 @@ namespace Runtime.Gameplay.Frog.Service
                 {
                     if (InteractedObjects[i] is ICollectable collectable)
                     {
-                        await UniTask.Delay(TimeSpan.FromSeconds(Constants.SPLINE_ANIMATION_DURATION));
+                        await UniTask.Delay(TimeSpan.FromSeconds(0.28f));
                         
                         _soundManager.PlayPopSound(AudioClipType.Pop);
                         
