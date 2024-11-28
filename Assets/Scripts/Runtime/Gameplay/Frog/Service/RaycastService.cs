@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Runtime.Core.Interface;
 using Runtime.Enums;
@@ -27,8 +28,8 @@ namespace Runtime.Gameplay.Frog.Service
                     {
                         return true;
                     }
-
-                    break; 
+            
+                    break;
                 }
                 
                 splineService.AddKnot(hit.GetFixedPosition());
@@ -36,19 +37,18 @@ namespace Runtime.Gameplay.Frog.Service
                 
                 if (interactable.ColorType != frogColorType)
                 {
-                    return false; 
+                    return false;
                 }
                 
                 if (arrow != null)
                 {
                     var newRayDirection = arrow.DirectionType.GetNewRayDirection();
-                    var newStartPosition = new Vector3(hit.point.x, Constants.TONGUE_FIXED_Y_POSITION, hit.point.z);
-                    RaycastAndDetectObjects(newStartPosition, newRayDirection, splineService, interactedObjects, frogColorType);
-                    break;
+                    var newStartPosition = hit.GetFixedPosition();
+                    return RaycastAndDetectObjects(newStartPosition, newRayDirection, splineService, interactedObjects, frogColorType);
                 }
             }
 
-            return true; 
+            return true;
         }
     }
 }
