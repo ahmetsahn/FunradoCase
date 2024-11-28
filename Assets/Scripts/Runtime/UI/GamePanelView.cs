@@ -31,6 +31,12 @@ namespace Runtime.UI
         
         private void OnUpdateMoveCount(UpdateCountOfRemainingMovesSignal signal)
         {
+            if (signal.MoveCount == 0)
+            {
+                moveCountText.text = "No moves left";
+                return;
+            }
+            
             moveCountText.text = signal.MoveCount.ToString();
         }
         

@@ -28,5 +28,10 @@ namespace Runtime.Gameplay.Arrow.ArrowView
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
+
+        public void DestroyCell()
+        {
+            
+        }
     }
 }

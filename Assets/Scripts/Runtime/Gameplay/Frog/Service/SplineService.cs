@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using Runtime.Utilities;
 using Runtime.Utilities.Extensions;
 using UnityEngine;
 using UnityEngine.Splines;
+using Object = UnityEngine.Object;
 
 namespace Runtime.Gameplay.Frog.Service
 {
@@ -13,9 +15,9 @@ namespace Runtime.Gameplay.Frog.Service
         
         private readonly SplineExtrude _splineExtrude;
         
-        public SplineService(GameObject tongueSplinePrefab)
+        public SplineService(SplineServiceConfig config)
         {
-            SplineContainer = Object.Instantiate(tongueSplinePrefab).GetComponent<SplineContainer>();
+            SplineContainer = Object.Instantiate(config.TongueSplinePrefab).GetComponent<SplineContainer>();
             _splineExtrude = SplineContainer.GetComponent<SplineExtrude>();
             MeshFilter meshFilter = SplineContainer.GetComponent<MeshFilter>();
             meshFilter.mesh = Object.Instantiate(meshFilter.sharedMesh);
@@ -62,5 +64,11 @@ namespace Runtime.Gameplay.Frog.Service
         {
             SplineContainer.Spline.Clear();
         }
+    }
+    
+    [Serializable]
+    public struct SplineServiceConfig
+    {
+        public GameObject TongueSplinePrefab;
     }
 }

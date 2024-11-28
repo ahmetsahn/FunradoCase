@@ -15,5 +15,10 @@ namespace Runtime.Gameplay.Grape.View
         {
             transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.Linear);
         }
+
+        public void DestroyCell()
+        {
+            
+        }
     }
 }

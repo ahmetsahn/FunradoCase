@@ -16,11 +16,11 @@ namespace Runtime.Gameplay.Frog.Controller
         public FrogAnimationController(
             FrogView view, 
             FrogModel model,
-            Animator animator)
+            FrogAnimationControllerConfig config)
         {
             _view = view;
             _model = model;
-            _animator = animator;
+            _animator = config.Animator;
             
             SubscribeEvents();
         }
@@ -57,5 +57,11 @@ namespace Runtime.Gameplay.Frog.Controller
         {
             UnsubscribeEvents();
         }
+    }
+    
+    [Serializable]
+    public struct FrogAnimationControllerConfig
+    {
+        public Animator Animator;
     }
 }

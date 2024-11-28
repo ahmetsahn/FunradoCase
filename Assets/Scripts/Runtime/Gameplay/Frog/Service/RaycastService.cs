@@ -27,6 +27,7 @@ namespace Runtime.Gameplay.Frog.Service
                     {
                         return true;
                     }
+                    
                     break;
                 }
 
@@ -40,7 +41,9 @@ namespace Runtime.Gameplay.Frog.Service
 
                 if (IsRelevantHit(arrow))
                 {
-                    HandleArrowHit(hit, arrow, splineService, collectedObjects, colorType);
+                    var newRayDirection = arrow.DirectionType.GetNewRayDirection();
+                    var newStartPosition = new Vector3(hit.point.x, Constants.TONGUE_FIXED_Y_POSITION, hit.point.z);
+                    RaycastAndDetectObjects(newStartPosition, newRayDirection, splineService, collectedObjects, colorType);
                     break;
                 }
             }
@@ -53,12 +56,5 @@ namespace Runtime.Gameplay.Frog.Service
         private bool IsRelevantHit(IArrow arrow) => arrow != null;
 
         private bool ShouldTerminateOnColorMismatch(IColor color, ColorType colorType) => color?.ColorType != colorType;
-
-        private void HandleArrowHit(RaycastHit hit, IArrow arrow, SplineService splineService, List<IColor> collectedObjects, ColorType colorType)
-        {
-            var newRayDirection = arrow.DirectionType.GetNewRayDirection();
-            var newStartPosition = new Vector3(hit.point.x, Constants.TONGUE_FIXED_Y_POSITION, hit.point.z);
-            RaycastAndDetectObjects(newStartPosition, newRayDirection, splineService, collectedObjects, colorType);
-        }
     }
 }

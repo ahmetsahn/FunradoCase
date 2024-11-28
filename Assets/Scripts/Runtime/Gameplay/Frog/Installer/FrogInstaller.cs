@@ -10,10 +10,10 @@ namespace Runtime.Gameplay.Frog.Installer
     public class FrogInstaller : MonoInstaller
     {
         [SerializeField]
-        private Animator animator;
-        
-        [SerializeField]
-        private GameObject tongueSplinePrefab;
+        private FrogAnimationControllerConfig frogAnimationControllerConfig;
+
+        [SerializeField] 
+        private SplineServiceConfig splineServiceConfig;
         
         [SerializeField]
         private FrogModelConfig frogModelConfig;
@@ -22,11 +22,11 @@ namespace Runtime.Gameplay.Frog.Installer
         {
             Container.Bind<FrogView>().FromComponentInHierarchy().AsSingle();
             Container.Bind<FrogModel>().AsSingle().WithArguments(frogModelConfig);
-            Container.BindInterfacesTo<FrogAnimationController>().AsSingle().WithArguments(animator);
+            Container.BindInterfacesTo<FrogAnimationController>().AsSingle().WithArguments(frogAnimationControllerConfig);
             Container.BindInterfacesTo<FrogTongueController>().AsSingle();
             Container.Bind<CollectablesService>().AsSingle();
             Container.Bind<RaycastService>().AsSingle();
-            Container.Bind<SplineService>().AsSingle().WithArguments(tongueSplinePrefab);
+            Container.Bind<SplineService>().AsSingle().WithArguments(splineServiceConfig);
         }
     }
 }

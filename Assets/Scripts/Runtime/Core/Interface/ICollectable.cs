@@ -2,7 +2,7 @@
 
 namespace Runtime.Core.Interface
 {
-    public interface ICollectable :  IColor
+    public interface ICollectable :  IColor, ICell
     {
         public Transform Transform { get; }
         
