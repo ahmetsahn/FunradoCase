@@ -14,9 +14,13 @@
         public const float ARROW_CELL__DESTROY_INTERVAL = 0.3f;
         public const float GRAPE_INCORRECT_DELAY = 0.5f;
         public const float COMPLETED_LEVEL_DELAY = 1f;
-        public const float GRAPE_SCALE = 0.8f;
-        public const float FROG_SCALE = 1;
-        public const float ARROW_SCALE = 0.45f;
+        public const float GRAPE_DEFAULT_SCALE = 0.8f;
+        public const float FROG_DEFAULT_SCALE = 1;
+        public const float ARROW_DEFAULT_SCALE = 0.45f;
         public const float OBJECT_SCALE_DURATION = 1;
+        public const float FROG_CLICK_ANIMATION_DURATION = 0.2f;
+        public const float FROG_CLICK_SCALE_UP = 1.2f;
+        public const float FROG_CLICK_SCALE_DURATION = 0.1f;
+        public const float CELL_SCALE_DOWN_DURATION = 0.3f;
     }
 }

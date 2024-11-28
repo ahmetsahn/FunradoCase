@@ -15,6 +15,9 @@ namespace Runtime.Core
         [SerializeField]
         private UIManagerConfig uiManagerConfig;
         
+        [SerializeField]
+        private SoundManagerConfig soundManagerConfig;
+        
         public override void InstallBindings()
         {
             BindSignals();
@@ -23,11 +26,12 @@ namespace Runtime.Core
         
         private void BindServices()
         {
-            Container.BindInterfacesAndSelfTo<LevelManager>().AsSingle().WithArguments(levelManagerConfig);
-            Container.BindInterfacesAndSelfTo<GameManager>().AsSingle();
             Container.BindInterfacesTo<LevelLoader>().AsSingle();
             Container.BindInterfacesTo<UIManager>().AsSingle().WithArguments(uiManagerConfig);
             
+            Container.BindInterfacesAndSelfTo<LevelManager>().AsSingle().WithArguments(levelManagerConfig);
+            Container.BindInterfacesAndSelfTo<GameManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SoundManager>().AsSingle().WithArguments(soundManagerConfig);
             Container.BindInterfacesAndSelfTo<SaveManager>().AsSingle();
         }
         

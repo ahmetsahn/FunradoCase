@@ -37,17 +37,17 @@ namespace Runtime.Gameplay.Arrow.View
 
         protected override void ScaleUp()
         {
-            transform.DOScale(Constants.ARROW_SCALE, Constants.OBJECT_SCALE_DURATION).SetEase(Ease.OutBounce);
+            transform.DOScale(Constants.ARROW_DEFAULT_SCALE, Constants.OBJECT_SCALE_DURATION).SetEase(Ease.OutBounce);
         }
 
         public void ScaleDownWithAnimation()
         {
-            AnimateScaleToZero(transform, 0, 0.3f);
+            AnimateScaleToZero(transform, 0, Constants.CELL_SCALE_DOWN_DURATION);
         }
 
         public void DestroyCell()
         {
-            AnimateScaleToZero(CellViewBelow.transform, 0f, 0.3f,true);
+            AnimateScaleToZero(CellViewBelow.transform, 0f, Constants.CELL_SCALE_DOWN_DURATION,true);
         }
     }
 }

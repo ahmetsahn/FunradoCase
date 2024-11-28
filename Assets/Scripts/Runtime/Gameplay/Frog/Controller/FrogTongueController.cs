@@ -17,8 +17,6 @@ namespace Runtime.Gameplay.Frog.Controller
         
         private readonly FrogModel _model;
         
-        private readonly SignalBus _signalBus;
-        
         private readonly RaycastService _raycastService;
         
         private readonly SplineService _splineService;
@@ -32,7 +30,6 @@ namespace Runtime.Gameplay.Frog.Controller
         public FrogTongueController(
             FrogView view, 
             FrogModel model, 
-            SignalBus signalBus,
             RaycastService raycastService, 
             SplineService splineService, 
             CollectablesService collectablesService,
@@ -40,7 +37,6 @@ namespace Runtime.Gameplay.Frog.Controller
         {
             _view = view;
             _model = model;
-            _signalBus = signalBus;
             _raycastService = raycastService;
             _splineService = splineService;
             _collectablesService = collectablesService;
@@ -58,22 +54,67 @@ namespace Runtime.Gameplay.Frog.Controller
         {
             try
             {
-                if (_isAnimationInProgress || !_levelManager.IsHasRemainingMoves())
+                if (!CanStartAnimation())
                 {
                     return;
                 }
                 
-                _isAnimationInProgress = true;
-                _levelManager.ReduceCountOfMove();
-                _view.OnTongueAnimationStart?.Invoke();
-                _levelManager.RegisterFrogAnimation();
-                AddStartKnotToSpline();
-                DetectObjects();
-                _collectablesService.AnimateInteractedObjectsWithFeedback(_model.ColorType);
+                await _view.ScaleUpAndDown();
+                
+                BeginAnimationSequence();
+                
                 await AnimateSpline(1);
                 
-                bool isCollectionSuccessful = _collectablesService.IsCollectionSuccessful;
-                if (isCollectionSuccessful)
+                await HandleCollectionOutcome();
+                
+                await AnimateSpline(0);
+                
+                HandlePostCollectionFeedback();
+                EndAnimationSequence();
+                
+            }
+            
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
+        
+        private bool CanStartAnimation()
+        {
+            return !_isAnimationInProgress && _levelManager.IsHasRemainingMoves();
+        }
+        
+        private void SetAnimationInProgress(bool value)
+        {
+            _isAnimationInProgress = value;
+        }
+
+        private void BeginAnimationSequence()
+        {
+            SetAnimationInProgress(true);
+            _levelManager.ReduceCountOfMove();
+            _view.OnTongueAnimationStart?.Invoke();
+            _levelManager.RegisterFrogAnimation();
+            AddStartKnotToSpline();
+            DetectObjects();
+            _collectablesService.AnimateInteractedObjectsWithFeedback(_model.ColorType);
+        }
+
+        private void EndAnimationSequence()
+        {
+            _view.OnTongueAnimationEnd?.Invoke();
+            _splineService.ResetSpline();
+            _collectablesService.Reset();
+            _isAnimationInProgress = false;
+            _levelManager.RegisterAnimationEnd();
+        }
+
+        private async UniTask HandleCollectionOutcome()
+        {
+            try
+            {
+                if (_collectablesService.IsCollectionSuccessful)
                 {
                     await UniTask.Delay(TimeSpan.FromSeconds(Constants.GRAPE_COLLECT_DELAY));
                     CollectAndAnimateObjects();
@@ -85,25 +126,31 @@ namespace Runtime.Gameplay.Frog.Controller
                 {
                     await UniTask.Delay(TimeSpan.FromSeconds(Constants.GRAPE_INCORRECT_DELAY));
                 }
-                
-                await AnimateSpline(0);
-                _view.OnTongueAnimationEnd?.Invoke();
-                _splineService.ResetSpline();
-                _collectablesService.Reset();
-                _isAnimationInProgress = false;
-                _levelManager.RegisterAnimationEnd();
-                
-                if (isCollectionSuccessful)
-                {
-                    await UniTask.Delay(TimeSpan.FromSeconds(Constants.TONGUE_ANIMATION_DURATION));
-                    _view.ScaleDown();
-                    _view.CellScaleDown();
-                }
             }
             
             catch (Exception e)
             {
-                Debug.LogException(e);
+                Debug.LogError(e);
+            }
+        }
+
+        private async void HandlePostCollectionFeedback()
+        {
+            try
+            {
+                if (!_collectablesService.IsCollectionSuccessful)
+                {
+                    return;
+                }
+                
+                await UniTask.Delay(TimeSpan.FromSeconds(Constants.TONGUE_ANIMATION_DURATION));
+                _view.ScaleDown();
+                _view.CellScaleDown();
+            }
+            
+            catch (Exception e)
+            {
+                Debug.LogError(e);
             }
         }
         

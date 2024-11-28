@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Runtime.Core.Interface;
 using Runtime.Gameplay.Abstract;
@@ -33,17 +34,27 @@ namespace Runtime.Gameplay.Frog.View
 
         protected override void ScaleUp()
         {
-            transform.DOScale(Constants.FROG_SCALE, Constants.OBJECT_SCALE_DURATION).SetEase(Ease.OutBounce);
+            transform.DOScale(Constants.FROG_DEFAULT_SCALE, Constants.OBJECT_SCALE_DURATION).SetEase(Ease.OutBounce);
+        }
+        
+        public async UniTask ScaleUpAndDown()
+        {
+            transform.DOScale(Constants.FROG_CLICK_SCALE_UP, Constants.FROG_CLICK_SCALE_DURATION).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                transform.DOScale(Constants.FROG_DEFAULT_SCALE, Constants.FROG_CLICK_SCALE_DURATION).SetEase(Ease.Linear);
+            });
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(Constants.FROG_CLICK_ANIMATION_DURATION));
         }
         
         public void ScaleDown()
         {
-            AnimateScaleToZero(transform, 0, 0.1f);
+            AnimateScaleToZero(transform, 0, Constants.FROG_CLICK_SCALE_DURATION);
         }
         
         public void CellScaleDown()
         {
-            AnimateScaleToZero(CellViewBelow.transform, 0, 0.3f,true);
+            AnimateScaleToZero(CellViewBelow.transform, 0, Constants.CELL_SCALE_DOWN_DURATION,true);
         }
     }
 }

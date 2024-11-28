@@ -56,17 +56,17 @@ namespace Runtime.Gameplay.Grape.View
 
         protected override void ScaleUp()
         {
-            transform.DOScale(Constants.GRAPE_SCALE, Constants.OBJECT_SCALE_DURATION).SetEase(Ease.OutBounce);
+            transform.DOScale(Constants.GRAPE_DEFAULT_SCALE, Constants.OBJECT_SCALE_DURATION).SetEase(Ease.OutBounce);
         }
 
         public void ScaleDownWithAnimation()
         {
-            AnimateScaleToZero(Transform, 0, 0.3f);
+            AnimateScaleToZero(Transform, 0, Constants.CELL_SCALE_DOWN_DURATION);
         }
 
         public void DestroyCell()
         {
-            AnimateScaleToZero(CellViewBelow.transform, 0, 0.3f, true);
+            AnimateScaleToZero(CellViewBelow.transform, 0, Constants.CELL_SCALE_DOWN_DURATION, true);
         }
     }
 }

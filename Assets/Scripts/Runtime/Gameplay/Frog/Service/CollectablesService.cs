@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Runtime.Core.Interface;
 using Runtime.Enums;
+using Runtime.Managers;
 using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -12,6 +13,12 @@ namespace Runtime.Gameplay.Frog.Service
 {
     public class CollectablesService
     {
+        private SoundManager _soundManager;
+        
+        public CollectablesService(SoundManager soundManager)
+        {
+            _soundManager = soundManager;
+        }
         public List<IInteractable> InteractedObjects { get; } = new();
         public bool IsCollectionSuccessful { get; set; } = true;
         
@@ -62,20 +69,22 @@ namespace Runtime.Gameplay.Frog.Service
         {
             try
             {
-                for (int i = InteractedObjects.Count - 1; i >= 0; i--)
+                List<IInteractable> interactedObjects = new List<IInteractable>(InteractedObjects);
+                
+                for (int i = interactedObjects.Count - 1; i >= 0; i--)
                 {
-                    if (InteractedObjects[i] is ICollectable collectable)
+                    if (interactedObjects[i] is ICollectable collectable)
                     {
                         await UniTask.Delay(TimeSpan.FromSeconds(Constants.GRAPE_CELL_DESTROY_INTERVAL));
                     }
                     
-                    if (InteractedObjects[i] is IArrow arrow)
+                    if (interactedObjects[i] is IArrow arrow)
                     {
                         await UniTask.Delay(TimeSpan.FromSeconds(Constants.ARROW_CELL__DESTROY_INTERVAL));
                         arrow.ScaleDownWithAnimation();
                     }
                     
-                    InteractedObjects[i].DestroyCell();
+                    interactedObjects[i].DestroyCell();
                 }
             }
             
@@ -94,6 +103,8 @@ namespace Runtime.Gameplay.Frog.Service
                     if (InteractedObjects[i] is ICollectable collectable)
                     {
                         await UniTask.Delay(TimeSpan.FromSeconds(Constants.SPLINE_ANIMATION_DURATION));
+                        
+                        _soundManager.PlayPopSound(AudioClipType.Pop);
                         
                         if(i == InteractedObjects.Count - 1 && !collectable.ColorType.Equals(frogColorType))
                         {
