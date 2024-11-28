@@ -41,7 +41,6 @@ namespace Runtime.Core
             Container.DeclareSignal<CloseUIPanelSignal>();
             Container.DeclareSignal<CloseAllUIPanelsSignal>();
             Container.DeclareSignal<UpdateCountOfRemainingMovesSignal>();
-            Container.DeclareSignal<ReduceCountOfRemainingFrogSignal>();
             Container.DeclareSignal<DestroyCurrentLevelSignal>();
         }
     }

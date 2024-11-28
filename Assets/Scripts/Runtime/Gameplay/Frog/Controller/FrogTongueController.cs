@@ -69,15 +69,36 @@ namespace Runtime.Gameplay.Frog.Controller
                 _levelManager.RegisterFrogAnimation();
                 AddStartKnotToSpline();
                 DetectObjects();
+                _collectablesService.AnimateInteractedObjectsWithFeedback(_model.ColorType);
                 await AnimateSpline(1);
-                CollectAndAnimateObjects();
+                
+                bool isCollectionSuccessful = _collectablesService.IsCollectionSuccessful;
+                if (isCollectionSuccessful)
+                {
+                    await UniTask.Delay(TimeSpan.FromSeconds(Constants.GRAPE_COLLECT_DELAY));
+                    CollectAndAnimateObjects();
+                    _collectablesService.DestroyInteractedObjectsCell();
+                    _levelManager.ReduceCountOfFrog();
+                }
+
+                else
+                {
+                    await UniTask.Delay(TimeSpan.FromSeconds(Constants.GRAPE_INCORRECT_DELAY));
+                }
+                
                 await AnimateSpline(0);
                 _view.OnTongueAnimationEnd?.Invoke();
-                HandleSuccessfulCollection();
                 _splineService.ResetSpline();
                 _collectablesService.Reset();
                 _isAnimationInProgress = false;
                 _levelManager.RegisterAnimationEnd();
+                
+                if (isCollectionSuccessful)
+                {
+                    await UniTask.Delay(TimeSpan.FromSeconds(Constants.TONGUE_ANIMATION_DURATION));
+                    _view.ScaleDownWithAnimation();
+                    _view.ScaleDownCell();
+                }
             }
             
             catch (Exception e)
@@ -94,16 +115,8 @@ namespace Runtime.Gameplay.Frog.Controller
         
         private void DetectObjects()
         {
-            bool collectionSuccess = _raycastService.RaycastAndDetectObjects(_view.transform.position, _view.transform.forward, _splineService, _collectablesService.CollectedObjects, _model.ColorType);
+            bool collectionSuccess = _raycastService.RaycastAndDetectObjects(_view.transform.position, _view.transform.forward, _splineService, _collectablesService.InteractedObjects, _model.ColorType);
             _collectablesService.IsCollectionSuccessful = collectionSuccess;
-        }
-        
-        private void HandleSuccessfulCollection()
-        {
-            if (_collectablesService.IsCollectionSuccessful)
-            {
-                _signalBus.Fire(new ReduceCountOfRemainingFrogSignal());
-            }
         }
 
         private async UniTask AnimateSpline(int targetRangeValue)
@@ -115,7 +128,7 @@ namespace Runtime.Gameplay.Frog.Controller
 
         private void CollectAndAnimateObjects()
         {
-            _collectablesService.CollectObjects(_splineService.GetSplinePointsReverse(), _splineService.SplineContainer);
+            _collectablesService.AnimateCollectablesAlongPath(_splineService.GetSplinePointsReverse(), _splineService.SplineContainer);
             float animationDuration = _splineService.SplineContainer.Spline.Count * Constants.SPLINE_ANIMATION_DURATION;
             _splineService.AnimateSplineRange(0, animationDuration);
         }

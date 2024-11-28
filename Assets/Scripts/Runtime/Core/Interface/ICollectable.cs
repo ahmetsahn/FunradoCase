@@ -2,10 +2,12 @@
 
 namespace Runtime.Core.Interface
 {
-    public interface ICollectable :  IColor, ICell
+    public interface ICollectable :  IInteractable
     {
         public Transform Transform { get; }
         
-        public void ScaleDownWithAnimation();
+        public void ScaleUpAndDown(bool freeze = false);
+        
+        public void ShowErrorFeedback();
     }
 }

@@ -46,7 +46,6 @@ namespace Runtime.Managers
         private void SubscribeEvents()
         {
             _signalBus.Subscribe<LoadLevelSignal>(OnLoadLevel);
-            _signalBus.Subscribe<ReduceCountOfRemainingFrogSignal>(OnReduceCountOfFrog);
         }
 
         private void OnLoadLevel(LoadLevelSignal _)
@@ -61,7 +60,7 @@ namespace Runtime.Managers
             _signalBus.Fire(new UpdateCountOfRemainingMovesSignal(_remainingMoves));
         }
         
-        private void OnReduceCountOfFrog()
+        public void ReduceCountOfFrog()
         {
             _remainingFrogs--;
         }
@@ -81,8 +80,10 @@ namespace Runtime.Managers
             }
         }
         
-        private void CheckLevelCompletion()
+        private async void CheckLevelCompletion()
         {
+            await UniTask.Delay(TimeSpan.FromSeconds(Constants.COMPLETED_LEVEL_DELAY));
+            
             if (_remainingFrogs <= 0)
             {
                 _signalBus.Fire(new CompleteLevelSignal(true));
@@ -103,7 +104,6 @@ namespace Runtime.Managers
         private void UnsubscribeEvents()
         {
             _signalBus.Unsubscribe<LoadLevelSignal>(OnLoadLevel);
-            _signalBus.Unsubscribe<ReduceCountOfRemainingFrogSignal>(OnReduceCountOfFrog);
         }
         
         public void Dispose()

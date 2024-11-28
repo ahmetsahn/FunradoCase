@@ -10,7 +10,7 @@ namespace Runtime.Gameplay.Frog.Service
 {
     public class RaycastService
     {
-        public bool RaycastAndDetectObjects(Vector3 startPosition, Vector3 rayDirection, SplineService splineService, List<IColor> collectedObjects, ColorType colorType)
+        public bool RaycastAndDetectObjects(Vector3 startPosition, Vector3 rayDirection, SplineService splineService, List<IInteractable> interactedObjects, ColorType frogColorType)
         {
             var sortedHits = Physics.RaycastAll(startPosition, rayDirection, Constants.TONGUE_MAX_RAYCAST_DISTANCE)
                 .OrderBy(hit => hit.distance)
@@ -18,43 +18,37 @@ namespace Runtime.Gameplay.Frog.Service
 
             foreach (var hit in sortedHits)
             {
-                var color = hit.collider.GetComponent<IColor>();
+                var interactable = hit.collider.GetComponent<IInteractable>();
                 var arrow = hit.collider.GetComponent<IArrow>();
 
-                if (!IsRelevantHit(color, arrow))
+                if (interactable == null)
                 {
-                    if (collectedObjects.Count > 0)
+                    if (interactedObjects.Count > 0)
                     {
                         return true;
                     }
-                    
-                    break;
+
+                    break; 
                 }
-
+                
                 splineService.AddKnot(hit.GetFixedPosition());
-                collectedObjects.Add(color);
-
-                if (ShouldTerminateOnColorMismatch(color, colorType))
+                interactedObjects.Add(interactable);
+                
+                if (interactable.ColorType != frogColorType)
                 {
                     return false; 
                 }
-
-                if (IsRelevantHit(arrow))
+                
+                if (arrow != null)
                 {
                     var newRayDirection = arrow.DirectionType.GetNewRayDirection();
                     var newStartPosition = new Vector3(hit.point.x, Constants.TONGUE_FIXED_Y_POSITION, hit.point.z);
-                    RaycastAndDetectObjects(newStartPosition, newRayDirection, splineService, collectedObjects, colorType);
+                    RaycastAndDetectObjects(newStartPosition, newRayDirection, splineService, interactedObjects, frogColorType);
                     break;
                 }
             }
 
             return true; 
         }
-
-        private bool IsRelevantHit(IColor color, IArrow arrow) => color != null || arrow != null;
-
-        private bool IsRelevantHit(IArrow arrow) => arrow != null;
-
-        private bool ShouldTerminateOnColorMismatch(IColor color, ColorType colorType) => color?.ColorType != colorType;
     }
 }

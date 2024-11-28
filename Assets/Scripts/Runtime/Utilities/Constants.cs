@@ -13,6 +13,6 @@
         public const float GRAPE_CELL_DESTROY_INTERVAL = 0.2f;
         public const float ARROW_CELL__DESTROY_INTERVAL = 0.28f;
         public const float GRAPE_INCORRECT_DELAY = 0.5f;
-        public const float COMPLETED_LEVEL_DELAY = 3f;
+        public const float COMPLETED_LEVEL_DELAY = 0.5f;
     }
 }

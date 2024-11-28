@@ -2,7 +2,7 @@
 
 namespace Runtime.Core.Interface
 {
-    public interface IArrow : IColor, ICell
+    public interface IArrow : IInteractable
     {
         public DirectionType DirectionType { get; }
     }
