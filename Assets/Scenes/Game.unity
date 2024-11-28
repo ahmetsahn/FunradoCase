@@ -628,6 +628,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365e9648427b400fa438cb8cacbf915b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelManagerConfig:
+    LevelDataListSo: {fileID: 11400000, guid: 4093791f195d8d94bb30c8b712b1126b, type: 2}
   uiManagerConfig:
     PanelPrefabs:
       _serializedList:

@@ -10,13 +10,16 @@ namespace Runtime.Managers
     {
         private readonly SignalBus _signalBus;
         
+        private readonly IInstantiator _instantiator;
+        
         private const string LEVEL_PREFAB_PATH = "Levels/Level ";
 
         private GameObject _currentLevelInstance;
         
-        public LevelLoader(SignalBus signalBus)
+        public LevelLoader(SignalBus signalBus, IInstantiator instantiator)
         {
             _signalBus = signalBus;
+            _instantiator = instantiator;
             
             SubscribeEvents();
         }
@@ -37,7 +40,7 @@ namespace Runtime.Managers
             GameObject levelPrefab = Resources.Load<GameObject>(levelPath);
 
             if (levelPrefab != null) {
-                _currentLevelInstance = Object.Instantiate(levelPrefab);
+                _currentLevelInstance = _instantiator.InstantiatePrefab(levelPrefab);
                 Debug.Log($"Level {signal.LevelIndex} loaded successfully.");
             } 
             else 

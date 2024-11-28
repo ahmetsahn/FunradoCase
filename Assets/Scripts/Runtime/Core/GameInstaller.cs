@@ -2,12 +2,16 @@
 using Runtime.Signal;
 using Runtime.UI.Manager;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Zenject;
 
 namespace Runtime.Core
 {
     public class GameInstaller : MonoInstaller
     {
+        [SerializeField]
+        private LevelManagerConfig levelManagerConfig;
+        
         [SerializeField]
         private UIManagerConfig uiManagerConfig;
         
@@ -19,9 +23,8 @@ namespace Runtime.Core
         
         private void BindServices()
         {
-            Container.Bind<LevelManager>().AsSingle();
-            
-            Container.BindInterfacesTo<GameManager>().AsSingle();
+            Container.BindInterfacesTo<LevelManager>().AsSingle().WithArguments(levelManagerConfig);
+            Container.BindInterfacesAndSelfTo<GameManager>().AsSingle();
             Container.BindInterfacesTo<LevelLoader>().AsSingle();
             Container.BindInterfacesTo<UIManager>().AsSingle().WithArguments(uiManagerConfig);
             
@@ -37,6 +40,8 @@ namespace Runtime.Core
             Container.DeclareSignal<OpenUIPanelSignal>();
             Container.DeclareSignal<CloseUIPanelSignal>();
             Container.DeclareSignal<CloseAllUIPanelsSignal>();
+            Container.DeclareSignal<ReduceCountOfRemainingMoveSignal>();
+            Container.DeclareSignal<UpdateCountOfRemainingMovesSignal>();
         }
     }
 }
