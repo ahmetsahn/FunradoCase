@@ -96,8 +96,8 @@ namespace Runtime.Gameplay.Frog.Controller
                 if (isCollectionSuccessful)
                 {
                     await UniTask.Delay(TimeSpan.FromSeconds(Constants.TONGUE_ANIMATION_DURATION));
-                    _view.ScaleDownWithAnimation();
-                    _view.ScaleDownCell();
+                    _view.ScaleDown();
+                    _view.CellScaleDown();
                 }
             }
             

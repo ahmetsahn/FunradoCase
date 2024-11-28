@@ -2,34 +2,21 @@ using System;
 using System.Linq;
 using DG.Tweening;
 using Runtime.Core.Interface;
+using Runtime.Gameplay.Abstract;
 using Runtime.Signal;
+using Runtime.Utilities;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Gameplay.Frog.View
 {
-    public class FrogView : MonoBehaviour
+    public class FrogView : ScalableObject
     {
         public event Action OnClick;
         
         public Action OnTongueAnimationStart;
         
         public Action OnTongueAnimationEnd;
-        
-        private Transform _cellTransform;
-
-        private void Awake()
-        {
-            FindGroundTransform();
-        }
-        
-        private void FindGroundTransform()
-        {
-            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1))
-            {
-                _cellTransform = hit.transform;
-            }
-        }
 
         private void OnMouseDown()
         {
@@ -43,18 +30,20 @@ namespace Runtime.Gameplay.Frog.View
                 collectable.ScaleDownWithAnimation();
             }
         }
-        
-        public void ScaleDownWithAnimation()
+
+        protected override void ScaleUp()
         {
-            transform.DOScale(0, 0.1f).SetEase(Ease.Linear);
+            transform.DOScale(Constants.FROG_SCALE, Constants.OBJECT_SCALE_DURATION).SetEase(Ease.OutBounce);
         }
         
-        public void ScaleDownCell()
+        public void ScaleDown()
         {
-            _cellTransform.DOScale(0, 0.1f).SetEase(Ease.Linear).OnComplete(() =>
-            {
-                Destroy(_cellTransform.gameObject);
-            });
+            AnimateScaleToZero(transform, 0, 0.1f);
+        }
+        
+        public void CellScaleDown()
+        {
+            AnimateScaleToZero(CellTransform, 0, 0.1f);
         }
     }
 }

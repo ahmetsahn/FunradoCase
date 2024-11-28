@@ -3,38 +3,21 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Runtime.Core.Interface;
 using Runtime.Enums;
+using Runtime.Gameplay.Abstract;
+using Runtime.Utilities;
 using UnityEngine;
 
 namespace Runtime.Gameplay.Grape.View
 {
-    public class GrapeView : MonoBehaviour, ICollectable
+    public class GrapeView : ScalableObject, ICollectable
     {
         [field: SerializeField]
         public ColorType ColorType { get; set; }
+
         public Transform Transform => transform;
         
         [SerializeField]
         private MeshRenderer meshRenderer;
-        
-        private Transform _cellTransform;
-
-        private void Awake()
-        {
-            FindGroundTransform();
-        }
-        
-        private void FindGroundTransform()
-        {
-            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1))
-            {
-                _cellTransform = hit.transform;
-            }
-        }
-
-        public void ScaleDownWithAnimation()
-        {
-            transform.DOScale(Vector3.zero, 0.25f).SetEase(Ease.Linear);
-        }
 
         public async void ScaleUpAndDown(bool freeze = false)
         {
@@ -71,9 +54,19 @@ namespace Runtime.Gameplay.Grape.View
             }
         }
 
+        protected override void ScaleUp()
+        {
+            transform.DOScale(Constants.GRAPE_SCALE, Constants.OBJECT_SCALE_DURATION).SetEase(Ease.OutBounce);
+        }
+
+        public void ScaleDownWithAnimation()
+        {
+            AnimateScaleToZero(Transform, 0, 0.1f);
+        }
+
         public void DestroyCell()
         {
-            _cellTransform.DOScale(0, 0.5f).SetEase(Ease.Linear);
+            AnimateScaleToZero(CellTransform, 0, 0.2f);
         }
     }
 }

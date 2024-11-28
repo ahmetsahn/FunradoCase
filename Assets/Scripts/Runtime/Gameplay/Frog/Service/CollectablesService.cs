@@ -111,6 +111,7 @@ namespace Runtime.Gameplay.Frog.Service
                     }
                 }
             }
+            
             catch (Exception e)
             {
                 Debug.LogError(e);

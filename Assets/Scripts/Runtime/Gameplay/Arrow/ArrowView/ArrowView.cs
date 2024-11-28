@@ -2,24 +2,24 @@
 using DG.Tweening;
 using Runtime.Core.Interface;
 using Runtime.Enums;
+using Runtime.Gameplay.Abstract;
+using Runtime.Utilities;
 using UnityEngine;
 
 namespace Runtime.Gameplay.Arrow.ArrowView
 {
-    public class ArrowView : MonoBehaviour, IArrow
+    public class ArrowView : ScalableObject, IArrow
     {
         [field: SerializeField]
         public ColorType ColorType { get; set; }
         public DirectionType DirectionType { get; private set; }
-        
-        private Transform _cellTransform;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             GetDirectionFromRotation();
-            FindGroundTransform();
         }
-        
+
         private void GetDirectionFromRotation()
         {
             float eulerAnglesY = transform.eulerAngles.y;
@@ -32,23 +32,20 @@ namespace Runtime.Gameplay.Arrow.ArrowView
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-        
-        private void FindGroundTransform()
+
+        protected override void ScaleUp()
         {
-            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1))
-            {
-                _cellTransform = hit.transform;
-            }
+            transform.DOScale(Constants.ARROW_SCALE, Constants.OBJECT_SCALE_DURATION).SetEase(Ease.OutBounce);
         }
 
         public void ScaleDownWithAnimation()
         {
-            transform.DOScale(0, 0.5f).SetEase(Ease.Linear);
+            AnimateScaleToZero(transform, 0, 0.1f);
         }
 
         public void DestroyCell()
         {
-            _cellTransform.DOScale(0, 0.5f).SetEase(Ease.Linear);
+            AnimateScaleToZero(CellTransform, 0f, 0.3f);
         }
     }
 }
