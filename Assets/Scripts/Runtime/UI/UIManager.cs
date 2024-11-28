@@ -11,8 +11,8 @@ namespace Runtime.UI.Manager
 {
     public class UIManager : IDisposable
     {
-        private readonly SerializedDictionary<UIPanelTypes, GameObject> _panelPrefabs;
-        private readonly SerializedDictionary<UIPanelTypes, Transform> _panelLayers;
+        private readonly SerializedDictionary<UIPanelType, GameObject> _panelPrefabs;
+        private readonly SerializedDictionary<UIPanelType, Transform> _panelLayers;
 
         private readonly SignalBus _signalBus;
         
@@ -92,7 +92,7 @@ namespace Runtime.UI.Manager
     [Serializable]
     public struct UIManagerConfig
     {
-        public SerializedDictionary<UIPanelTypes, GameObject> PanelPrefabs;
-        public SerializedDictionary<UIPanelTypes, Transform> PanelLayers;
+        public SerializedDictionary<UIPanelType, GameObject> PanelPrefabs;
+        public SerializedDictionary<UIPanelType, Transform> PanelLayers;
     }
 }

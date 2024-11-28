@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1180878610008031665, guid: f3f9a305f9b639c4196bd2660672a3bc,
+        type: 3}
+      propertyPath: frogModelConfig.ColorType
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1495021142972612021, guid: f3f9a305f9b639c4196bd2660672a3bc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

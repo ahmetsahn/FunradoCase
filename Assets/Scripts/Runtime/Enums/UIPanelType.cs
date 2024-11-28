@@ -1,6 +1,6 @@
 ﻿namespace Runtime.Enums
 {
-    public enum UIPanelTypes
+    public enum UIPanelType
     {
         GamePanel = 0,
         GameOverPanel = 1,

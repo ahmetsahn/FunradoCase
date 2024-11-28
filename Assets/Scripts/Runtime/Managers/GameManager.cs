@@ -22,7 +22,7 @@ namespace Runtime.Managers
 
         public void Initialize()
         {
-            FirePanelSignal(UIPanelTypes.GamePanel);
+            FirePanelSignal(UIPanelType.GamePanel);
             LoadCurrentLevel();
         }
         
@@ -42,7 +42,7 @@ namespace Runtime.Managers
             _signalBus.Fire(new LoadLevelSignal(_currentLevelIndex));
         }
         
-        private void FirePanelSignal(UIPanelTypes panelType)
+        private void FirePanelSignal(UIPanelType panelType)
         {
             _signalBus.Fire(new OpenUIPanelSignal(panelType));
         }
@@ -53,13 +53,13 @@ namespace Runtime.Managers
                 SaveManager saveManager = new SaveManager();
                 saveManager.SaveLevelIndex(_currentLevelIndex);
                 _signalBus.Fire(new CompleteLevelSignal(_currentLevelIndex));
-                FirePanelSignal(UIPanelTypes.WinPanel);
+                FirePanelSignal(UIPanelType.WinPanel);
             }
             
             else 
             {
                 _signalBus.Fire(new RetryLevelSignal());
-                FirePanelSignal(UIPanelTypes.GameOverPanel);
+                FirePanelSignal(UIPanelType.GameOverPanel);
             }
         }
     }

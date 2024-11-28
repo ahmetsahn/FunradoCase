@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7324379772362977530}
   - component: {fileID: 7527548732343846769}
   - component: {fileID: 3657879319839282398}
+  - component: {fileID: 824972263621580144}
+  - component: {fileID: -7442036464795476499}
   m_Layer: 0
   m_Name: BaseGrape
   m_TagString: Untagged
@@ -83,3 +85,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &824972263621580144
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636976548727555155}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.63336253, y: 0.5062599, z: 0.6215816}
+  m_Center: {x: -0.0001603663, y: 0.014140509, z: 0.055995464}
+--- !u!114 &-7442036464795476499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636976548727555155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf27e3c4275473b872abd4432709149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ColorType>k__BackingField: 0

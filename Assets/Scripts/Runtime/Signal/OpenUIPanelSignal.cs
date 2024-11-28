@@ -4,9 +4,9 @@ namespace Runtime.Signal
 {
     public readonly struct OpenUIPanelSignal
     {
-        public readonly UIPanelTypes PanelType;
+        public readonly UIPanelType PanelType;
         
-        public OpenUIPanelSignal(UIPanelTypes panelType)
+        public OpenUIPanelSignal(UIPanelType panelType)
         {
             PanelType = panelType;
         }
