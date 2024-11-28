@@ -23,7 +23,7 @@ namespace Runtime.Core
         
         private void BindServices()
         {
-            Container.BindInterfacesTo<LevelManager>().AsSingle().WithArguments(levelManagerConfig);
+            Container.BindInterfacesAndSelfTo<LevelManager>().AsSingle().WithArguments(levelManagerConfig);
             Container.BindInterfacesAndSelfTo<GameManager>().AsSingle();
             Container.BindInterfacesTo<LevelLoader>().AsSingle();
             Container.BindInterfacesTo<UIManager>().AsSingle().WithArguments(uiManagerConfig);
@@ -36,12 +36,13 @@ namespace Runtime.Core
             SignalBusInstaller.Install(Container);
             Container.DeclareSignal<LoadLevelSignal>();
             Container.DeclareSignal<CompleteLevelSignal>();
-            Container.DeclareSignal<RetryLevelSignal>();
+            Container.DeclareSignal<GameOverSignal>();
             Container.DeclareSignal<OpenUIPanelSignal>();
             Container.DeclareSignal<CloseUIPanelSignal>();
             Container.DeclareSignal<CloseAllUIPanelsSignal>();
-            Container.DeclareSignal<ReduceCountOfRemainingMoveSignal>();
             Container.DeclareSignal<UpdateCountOfRemainingMovesSignal>();
+            Container.DeclareSignal<ReduceCountOfRemainingFrogSignal>();
+            Container.DeclareSignal<DestroyCurrentLevelSignal>();
         }
     }
 }

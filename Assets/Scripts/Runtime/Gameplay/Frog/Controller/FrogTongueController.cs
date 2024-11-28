@@ -3,8 +3,11 @@ using Cysharp.Threading.Tasks;
 using Runtime.Gameplay.Frog.Model;
 using Runtime.Gameplay.Frog.Service;
 using Runtime.Gameplay.Frog.View;
+using Runtime.Managers;
+using Runtime.Signal;
 using Runtime.Utilities;
 using UnityEngine;
+using Zenject;
 
 namespace Runtime.Gameplay.Frog.Controller
 {
@@ -14,24 +17,34 @@ namespace Runtime.Gameplay.Frog.Controller
         
         private readonly FrogModel _model;
         
+        private readonly SignalBus _signalBus;
+        
         private readonly RaycastService _raycastService;
         
         private readonly SplineService _splineService;
         
         private readonly CollectablesService _collectablesService;
+        
+        private readonly LevelManager _levelManager;
+        
+        private bool _isAnimationInProgress;
 
         public FrogTongueController(
             FrogView view, 
             FrogModel model, 
+            SignalBus signalBus,
             RaycastService raycastService, 
             SplineService splineService, 
-            CollectablesService collectablesService)
+            CollectablesService collectablesService,
+            LevelManager levelManager)
         {
             _view = view;
             _model = model;
+            _signalBus = signalBus;
             _raycastService = raycastService;
             _splineService = splineService;
             _collectablesService = collectablesService;
+            _levelManager = levelManager;
 
             SubscribeEvents();
         }
@@ -45,13 +58,26 @@ namespace Runtime.Gameplay.Frog.Controller
         {
             try
             {
+                if (_isAnimationInProgress || !_levelManager.IsHasRemainingMoves())
+                {
+                    return;
+                }
+                
+                _isAnimationInProgress = true;
+                _levelManager.ReduceCountOfMove();
                 _view.OnTongueAnimationStart?.Invoke();
+                _levelManager.RegisterFrogAnimation();
                 AddStartKnotToSpline();
                 DetectObjects();
                 await AnimateSpline(1);
                 CollectAndAnimateObjects();
                 await AnimateSpline(0);
                 _view.OnTongueAnimationEnd?.Invoke();
+                HandleSuccessfulCollection();
+                _splineService.ResetSpline();
+                _collectablesService.Reset();
+                _isAnimationInProgress = false;
+                _levelManager.RegisterAnimationEnd();
             }
             
             catch (Exception e)
@@ -70,6 +96,14 @@ namespace Runtime.Gameplay.Frog.Controller
         {
             bool collectionSuccess = _raycastService.RaycastAndDetectObjects(_view.transform.position, _view.transform.forward, _splineService, _collectablesService.CollectedObjects, _model.ColorType);
             _collectablesService.IsCollectionSuccessful = collectionSuccess;
+        }
+        
+        private void HandleSuccessfulCollection()
+        {
+            if (_collectablesService.IsCollectionSuccessful)
+            {
+                _signalBus.Fire(new ReduceCountOfRemainingFrogSignal());
+            }
         }
 
         private async UniTask AnimateSpline(int targetRangeValue)

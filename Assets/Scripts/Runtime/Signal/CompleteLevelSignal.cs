@@ -2,11 +2,11 @@
 {
     public readonly struct CompleteLevelSignal
     {
-        public readonly int LevelIndex;
+        public readonly bool HasWon;
         
-        public CompleteLevelSignal(int levelIndex)
+        public CompleteLevelSignal(bool hasWon)
         {
-            LevelIndex = levelIndex;
+            HasWon = hasWon;
         }
     }
 }

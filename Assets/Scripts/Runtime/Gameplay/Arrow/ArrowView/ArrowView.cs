@@ -1,4 +1,5 @@
-﻿using Runtime.Core.Interface;
+﻿using System;
+using Runtime.Core.Interface;
 using Runtime.Enums;
 using UnityEngine;
 
@@ -8,8 +9,24 @@ namespace Runtime.Gameplay.Arrow.ArrowView
     {
         [field: SerializeField]
         public ColorType ColorType { get; set; }
+        public DirectionType DirectionType { get; private set; }
+
+        private void Awake()
+        {
+            GetDirectionFromRotation();
+        }
         
-        [field: SerializeField]
-        public DirectionType DirectionType { get; set; }
+        private void GetDirectionFromRotation()
+        {
+            float eulerAnglesY = transform.eulerAngles.y;
+            DirectionType = eulerAnglesY switch
+            {
+                0 => DirectionType.Forward,
+                90 => DirectionType.Right,
+                180 => DirectionType.Back,
+                270 => DirectionType.Left,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
     }
 }

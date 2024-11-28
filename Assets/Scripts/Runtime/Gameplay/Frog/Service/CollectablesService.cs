@@ -13,8 +13,7 @@ namespace Runtime.Gameplay.Frog.Service
     {
         public List<IColor> CollectedObjects { get; private set; } = new();
         public bool IsCollectionSuccessful { get; set; } = true;
-
-        // Nesneleri toplama işlemi
+        
         public async void CollectObjects(List<Vector3> pathPositions, SplineContainer splineContainer)
         {
             try
@@ -47,8 +46,7 @@ namespace Runtime.Gameplay.Frog.Service
                 Debug.LogException(e);
             }
         }
-
-        // Koleksiyon objelerini hareket ettirme işlemi
+        
         private void MoveObjectAlongPath(ICollectable collectable, List<Vector3> pathPositions, float durationShortener, SplineContainer splineContainer)
         {
             collectable.Transform.DOPath(pathPositions.ToArray(), 
@@ -56,6 +54,13 @@ namespace Runtime.Gameplay.Frog.Service
                     PathType.CatmullRom)
                 .SetEase(Ease.Linear)
                 .From();
+        }
+        
+
+        public void Reset()
+        {
+            CollectedObjects.Clear();
+            IsCollectionSuccessful = true;
         }
     }
 }

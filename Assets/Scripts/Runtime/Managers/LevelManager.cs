@@ -1,6 +1,11 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using Runtime.Data.Scriptable;
+using Runtime.Gameplay.Frog.Controller;
+using Runtime.Gameplay.Frog.View;
 using Runtime.Signal;
+using Runtime.Utilities;
+using UnityEngine;
 using Zenject;
 
 namespace Runtime.Managers
@@ -13,7 +18,7 @@ namespace Runtime.Managers
         
         private readonly SignalBus _signalBus;
         
-        private int _currentLevelIndex;
+        private int _activeAnimationCount;
 
         private int _remainingMoves;
         private int _remainingFrogs;
@@ -33,52 +38,72 @@ namespace Runtime.Managers
         
         private void InitializeLevel()
         {
-            _currentLevelIndex = _gameManager.GetCurrentLevelIndex();
-            _remainingMoves = _levelDataListSo.Levels[_currentLevelIndex].MaxMoves;
-            _remainingFrogs = _levelDataListSo.Levels[_currentLevelIndex].FrogCount;
+            var currentLevelIndex = _gameManager.GetCurrentLevelIndex();
+            _remainingMoves = _levelDataListSo.Levels[currentLevelIndex].MaxMoves;
+            _remainingFrogs = _levelDataListSo.Levels[currentLevelIndex].FrogCount;
         }
         
         private void SubscribeEvents()
         {
             _signalBus.Subscribe<LoadLevelSignal>(OnLoadLevel);
-            _signalBus.Subscribe<ReduceCountOfRemainingMoveSignal>(OnReduceCountOfMove);
+            _signalBus.Subscribe<ReduceCountOfRemainingFrogSignal>(OnReduceCountOfFrog);
         }
 
         private void OnLoadLevel(LoadLevelSignal _)
         {
+            InitializeLevel();
             _signalBus.Fire(new UpdateCountOfRemainingMovesSignal(_remainingMoves));
         }
 
-        private void OnReduceCountOfMove()
+        public void ReduceCountOfMove()
         {
             _remainingMoves--;
             _signalBus.Fire(new UpdateCountOfRemainingMovesSignal(_remainingMoves));
-            
-            if (_remainingMoves <= 0)
-            {
-                //TODO: Game Over
-            }
         }
         
         private void OnReduceCountOfFrog()
         {
             _remainingFrogs--;
+        }
+        
+        public void RegisterFrogAnimation()
+        {
+            _activeAnimationCount++;
+        }
+        
+        public void RegisterAnimationEnd()
+        {
+            _activeAnimationCount--;
             
-            if (_remainingFrogs <= 0)
+            if (_activeAnimationCount == 0)
             {
-                //TODO: Level Complete
+                CheckLevelCompletion();
             }
         }
         
-        private void CompleteLevel()
+        private void CheckLevelCompletion()
         {
-            int nextLevelIndex = _currentLevelIndex + 1;
-            _gameManager.SetCurrentLevelIndex(nextLevelIndex);
+            if (_remainingFrogs <= 0)
+            {
+                _signalBus.Fire(new CompleteLevelSignal(true));
+                return;
+            }
+            
+            if (_remainingMoves <= 0)
+            {
+                _signalBus.Fire(new CompleteLevelSignal(false));
+            }
+        }
+        
+        public bool IsHasRemainingMoves()
+        {
+            return _remainingMoves > 0;
         }
         
         private void UnsubscribeEvents()
         {
-            _signalBus.Unsubscribe<ReduceCountOfRemainingMoveSignal>(OnReduceCountOfMove);
+            _signalBus.Unsubscribe<LoadLevelSignal>(OnLoadLevel);
+            _signalBus.Unsubscribe<ReduceCountOfRemainingFrogSignal>(OnReduceCountOfFrog);
         }
         
         public void Dispose()

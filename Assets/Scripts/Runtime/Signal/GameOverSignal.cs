@@ -1,6 +1,6 @@
 ﻿namespace Runtime.Signal
 {
-    public readonly struct RetryLevelSignal
+    public readonly struct GameOverSignal
     {
         
     }

@@ -9,23 +9,15 @@ namespace Runtime.Gameplay.Frog.View
 {
     public class FrogView : MonoBehaviour
     {
-        private SignalBus _signalBus;
         public event Action OnClick;
         
         public Action OnTongueAnimationStart;
         
         public Action OnTongueAnimationEnd;
         
-        [Inject]
-        private void Construct(SignalBus signalBus)
-        {
-            _signalBus = signalBus;
-        }
-        
         private void OnMouseDown()
         {
             OnClick?.Invoke();
-            _signalBus.Fire(new ReduceCountOfRemainingMoveSignal());
         }
 
         private void OnTriggerEnter(Collider other)

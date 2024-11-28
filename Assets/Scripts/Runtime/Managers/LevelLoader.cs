@@ -27,6 +27,7 @@ namespace Runtime.Managers
         private void SubscribeEvents()
         {
             _signalBus.Subscribe<LoadLevelSignal>(OnLoadLevel);
+            _signalBus.Subscribe<DestroyCurrentLevelSignal>(OnDestroyCurrentLevel);
         }
 
         private void OnLoadLevel(LoadLevelSignal signal) 
@@ -49,9 +50,18 @@ namespace Runtime.Managers
             }
         }
         
+        private void OnDestroyCurrentLevel()
+        {
+            if (_currentLevelInstance != null)
+            {
+                Object.Destroy(_currentLevelInstance);
+            }
+        }
+        
         private void UnsubscribeEvents()
         {
             _signalBus.Unsubscribe<LoadLevelSignal>(OnLoadLevel);
+            _signalBus.Unsubscribe<DestroyCurrentLevelSignal>(OnDestroyCurrentLevel);
         }
         
         public void Dispose()
