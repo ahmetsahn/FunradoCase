@@ -1,4 +1,5 @@
-﻿using Runtime.Signal;
+﻿using Runtime.Enums;
+using Runtime.Signal;
 using Zenject;
 
 namespace Runtime.Managers
@@ -21,6 +22,7 @@ namespace Runtime.Managers
 
         public void Initialize()
         {
+            FirePanelSignal(UIPanelTypes.GamePanel);
             LoadCurrentLevel();
         }
         
@@ -40,17 +42,24 @@ namespace Runtime.Managers
             _signalBus.Fire(new LoadLevelSignal(_currentLevelIndex));
         }
         
+        private void FirePanelSignal(UIPanelTypes panelType)
+        {
+            _signalBus.Fire(new OpenUIPanelSignal(panelType));
+        }
+        
         public void CompleteLevel(bool hasWon) {
             if (hasWon) {
                 _currentLevelIndex++;
                 SaveManager saveManager = new SaveManager();
                 saveManager.SaveLevelIndex(_currentLevelIndex);
                 _signalBus.Fire(new CompleteLevelSignal(_currentLevelIndex));
+                FirePanelSignal(UIPanelTypes.WinPanel);
             }
             
             else 
             {
                 _signalBus.Fire(new RetryLevelSignal());
+                FirePanelSignal(UIPanelTypes.GameOverPanel);
             }
         }
     }
