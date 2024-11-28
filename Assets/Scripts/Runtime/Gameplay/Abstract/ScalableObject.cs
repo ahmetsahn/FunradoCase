@@ -1,15 +1,16 @@
 ﻿using DG.Tweening;
+using Runtime.Gameplay.Cell.View;
 using UnityEngine;
 
 namespace Runtime.Gameplay.Abstract
 {
     public abstract class ScalableObject : MonoBehaviour
     {
-        protected Transform CellTransform;
+        protected CellView CellViewBelow;
         protected virtual void Awake()
         {
             SetScaleToZero();
-            FindGroundTransform();
+            FindCellBelow();
         }
 
         private void Start()
@@ -17,11 +18,11 @@ namespace Runtime.Gameplay.Abstract
             ScaleUp();
         }
 
-        private void FindGroundTransform()
+        protected void FindCellBelow()
         {
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1))
             {
-                CellTransform = hit.transform;
+                CellViewBelow = hit.transform.GetComponent<CellView>();
             }
         }
         
@@ -30,14 +31,17 @@ namespace Runtime.Gameplay.Abstract
             transform.localScale = Vector3.zero;
         }
 
-        protected virtual void ScaleUp()
-        {
-            
-        }
+        protected virtual void ScaleUp() { }
         
-        protected void AnimateScaleToZero(Transform targetTransform, float endValue, float duration)
+        protected void AnimateScaleToZero(Transform targetTransform, float endValue, float duration, bool destroy = false)
         {
-            targetTransform.DOScale(endValue, duration).SetEase(Ease.Linear);
+            targetTransform.DOScale(endValue, duration).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                if (destroy)
+                {
+                    Destroy(CellViewBelow.gameObject);
+                }
+            });
         }
     }
 }

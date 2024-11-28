@@ -17,5 +17,5 @@ MonoBehaviour:
     FrogCount: 5
   - MaxMoves: 5
     FrogCount: 3
-  - MaxMoves: 3
+  - MaxMoves: 5
     FrogCount: 3

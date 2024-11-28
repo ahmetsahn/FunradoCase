@@ -43,7 +43,7 @@ namespace Runtime.Gameplay.Frog.View
         
         public void CellScaleDown()
         {
-            AnimateScaleToZero(CellTransform, 0, 0.1f);
+            AnimateScaleToZero(CellViewBelow.transform, 0, 0.3f,true);
         }
     }
 }

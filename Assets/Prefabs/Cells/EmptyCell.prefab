@@ -13,6 +13,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EmptyCell
       objectReference: {fileID: 0}
+    - target: {fileID: 3200993765096972204, guid: 9cfe4e443fba9bc44a3f88b78c23c06a,
+        type: 3}
+      propertyPath: isEmpty
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4125598895887654883, guid: 9cfe4e443fba9bc44a3f88b78c23c06a,
         type: 3}
       propertyPath: m_LocalPosition.x

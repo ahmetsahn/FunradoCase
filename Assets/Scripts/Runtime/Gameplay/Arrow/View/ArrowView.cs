@@ -6,7 +6,7 @@ using Runtime.Gameplay.Abstract;
 using Runtime.Utilities;
 using UnityEngine;
 
-namespace Runtime.Gameplay.Arrow.ArrowView
+namespace Runtime.Gameplay.Arrow.View
 {
     public class ArrowView : ScalableObject, IArrow
     {
@@ -42,12 +42,12 @@ namespace Runtime.Gameplay.Arrow.ArrowView
 
         public void ScaleDownWithAnimation()
         {
-            AnimateScaleToZero(transform, 0, 0.1f);
+            AnimateScaleToZero(transform, 0, 0.3f);
         }
 
         public void DestroyCell()
         {
-            AnimateScaleToZero(CellTransform, 0f, 0.3f);
+            AnimateScaleToZero(CellViewBelow.transform, 0f, 0.3f,true);
         }
     }
 }
