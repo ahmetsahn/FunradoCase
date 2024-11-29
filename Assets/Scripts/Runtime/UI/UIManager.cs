@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using Runtime.Enums;
 using Runtime.Signal;
@@ -7,7 +6,7 @@ using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
-namespace Runtime.UI.Manager
+namespace Runtime.UI
 {
     public class UIManager : IDisposable
     {
@@ -40,20 +39,14 @@ namespace Runtime.UI.Manager
 
         private void OnOpenPanel(OpenUIPanelSignal signal)
         {
-            if (_panelPrefabs.TryGetValue(signal.PanelType, out var panelPrefab))
+            if (!_panelPrefabs.TryGetValue(signal.PanelType, out var panelPrefab))
             {
-                if (_panelLayers.TryGetValue(signal.PanelType, out var layer))
-                {
-                    _instantiator.InstantiatePrefab(panelPrefab, layer);
-                }
-                else
-                {
-                    Debug.LogError($"Layer for PanelType {signal.PanelType} not found.");
-                }
+                return;
             }
-            else
+            
+            if (_panelLayers.TryGetValue(signal.PanelType, out var layer))
             {
-                Debug.LogError($"Prefab for PanelType {signal.PanelType} not found.");
+                _instantiator.InstantiatePrefab(panelPrefab, layer);
             }
         }
 

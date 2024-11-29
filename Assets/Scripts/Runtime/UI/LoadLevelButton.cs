@@ -9,9 +9,9 @@ namespace Runtime.UI
 {
     public abstract class LoadLevelButton : MonoBehaviour
     {
-        private Button _button;
-        
         protected SignalBus SignalBus;
+        
+        private Button _button;
         
         private GameManager _gameManager;
         

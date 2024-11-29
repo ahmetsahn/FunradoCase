@@ -1,11 +1,8 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using Runtime.Data.Scriptable;
-using Runtime.Gameplay.Frog.Controller;
-using Runtime.Gameplay.Frog.View;
 using Runtime.Signal;
 using Runtime.Utilities;
-using UnityEngine;
 using Zenject;
 
 namespace Runtime.Managers

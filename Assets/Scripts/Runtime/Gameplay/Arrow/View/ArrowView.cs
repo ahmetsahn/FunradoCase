@@ -18,8 +18,6 @@ namespace Runtime.Gameplay.Arrow.View
         {
             base.Awake();
             GetDirectionFromRotation();
-
-            Debug.Log(DirectionType);
         }
 
         private void GetDirectionFromRotation()

@@ -1,6 +1,4 @@
-﻿using System;
-using Runtime.Enums;
-using Runtime.Gameplay.Abstract;
+﻿using Runtime.Gameplay.Abstract;
 using UnityEngine;
 
 namespace Runtime.Gameplay.Cell.View

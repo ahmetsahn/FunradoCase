@@ -10,13 +10,10 @@ namespace Runtime.Gameplay.Frog.Model
         
         public readonly int AnimationHashMouthOpen = Animator.StringToHash("MouthOpen");
         public readonly int AnimationHashMouthClose = Animator.StringToHash("MouthClose");
-
-        public float RaycastMaxDistance;
         
         public FrogModel(FrogModelConfig config)
         {
             ColorType = config.ColorType;
-            RaycastMaxDistance = config.RaycastMaxDistance;
         }
     }
     
@@ -24,7 +21,5 @@ namespace Runtime.Gameplay.Frog.Model
     public struct FrogModelConfig
     {
         public ColorType ColorType;
-        
-        public float RaycastMaxDistance;
     }
 }

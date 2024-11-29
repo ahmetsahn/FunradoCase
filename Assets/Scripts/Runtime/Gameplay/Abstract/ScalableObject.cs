@@ -7,6 +7,7 @@ namespace Runtime.Gameplay.Abstract
     public abstract class ScalableObject : MonoBehaviour
     {
         protected CellView CellViewBelow;
+        
         protected virtual void Awake()
         {
             SetScaleToZero();

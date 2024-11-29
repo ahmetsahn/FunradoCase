@@ -13,14 +13,14 @@ namespace Runtime.Gameplay.Grape.View
     {
         [field: SerializeField]
         public ColorType ColorType { get; set; }
-
-        public Transform Transform => transform;
         
         [SerializeField]
         private MeshRenderer meshRenderer;
         
         [SerializeField]
         private Material failMaterial;
+
+        public Transform Transform => transform;
         
         private Material _defaultMaterial;
 

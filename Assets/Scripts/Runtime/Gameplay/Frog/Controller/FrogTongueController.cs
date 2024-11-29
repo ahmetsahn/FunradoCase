@@ -5,10 +5,8 @@ using Runtime.Gameplay.Frog.Model;
 using Runtime.Gameplay.Frog.Service;
 using Runtime.Gameplay.Frog.View;
 using Runtime.Managers;
-using Runtime.Signal;
 using Runtime.Utilities;
 using UnityEngine;
-using Zenject;
 
 namespace Runtime.Gameplay.Frog.Controller
 {

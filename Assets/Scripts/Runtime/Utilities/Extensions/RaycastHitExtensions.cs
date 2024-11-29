@@ -1,5 +1,4 @@
-﻿using Runtime.Gameplay.Frog.Model;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Runtime.Utilities.Extensions
 {

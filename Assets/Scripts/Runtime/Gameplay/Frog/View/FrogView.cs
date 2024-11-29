@@ -1,13 +1,10 @@
 using System;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Runtime.Core.Interface;
 using Runtime.Gameplay.Abstract;
-using Runtime.Signal;
 using Runtime.Utilities;
 using UnityEngine;
-using Zenject;
 
 namespace Runtime.Gameplay.Frog.View
 {

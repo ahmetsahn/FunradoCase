@@ -1,5 +1,4 @@
-﻿using System;
-using Runtime.Signal;
+﻿using Runtime.Signal;
 using TMPro;
 using UnityEngine;
 using Zenject;

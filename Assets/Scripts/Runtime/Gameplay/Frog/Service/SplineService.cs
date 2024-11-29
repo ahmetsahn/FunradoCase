@@ -11,7 +11,7 @@ namespace Runtime.Gameplay.Frog.Service
 {
     public class SplineService
     {
-        public SplineContainer SplineContainer { get; private set; }
+        public readonly SplineContainer SplineContainer;
         
         private readonly SplineExtrude _splineExtrude;
         

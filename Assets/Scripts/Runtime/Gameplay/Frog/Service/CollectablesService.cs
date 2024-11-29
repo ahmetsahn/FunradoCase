@@ -13,13 +13,15 @@ namespace Runtime.Gameplay.Frog.Service
 {
     public class CollectablesService
     {
-        private SoundManager _soundManager;
+        private readonly SoundManager _soundManager;
         
         public CollectablesService(SoundManager soundManager)
         {
             _soundManager = soundManager;
         }
+        
         public List<IInteractable> InteractedObjects { get; } = new();
+        
         public bool IsCollectionSuccessful { get; set; } = true;
         
         public async void AnimateCollectablesAlongPath(List<Vector3> pathPositions, SplineContainer splineContainer)

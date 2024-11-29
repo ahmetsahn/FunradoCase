@@ -1,6 +1,6 @@
 ﻿using Runtime.Managers;
 using Runtime.Signal;
-using Runtime.UI.Manager;
+using Runtime.UI;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using Zenject;

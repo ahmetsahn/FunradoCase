@@ -17,7 +17,6 @@ namespace Runtime.Managers
         {
             _saveManager = saveManager;
             _signalBus = signalBus;
-            
             _currentLevelIndex = _saveManager.LoadLevelIndex();
             
             SubscribeEvents();

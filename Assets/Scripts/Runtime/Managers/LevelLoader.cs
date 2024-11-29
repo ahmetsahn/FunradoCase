@@ -40,14 +40,10 @@ namespace Runtime.Managers
             string levelPath = $"{LEVEL_PREFAB_PATH}{signal.LevelIndex}";
             GameObject levelPrefab = Resources.Load<GameObject>(levelPath);
 
-            if (levelPrefab != null) {
-                _currentLevelInstance = _instantiator.InstantiatePrefab(levelPrefab);
-                Debug.Log($"Level {signal.LevelIndex} loaded successfully.");
-            } 
-            else 
+            if (levelPrefab != null)
             {
-                Debug.LogError($"Level prefab not found at path: {levelPath}");
-            }
+                _currentLevelInstance = _instantiator.InstantiatePrefab(levelPrefab);
+            } 
         }
         
         private void OnDestroyCurrentLevel()

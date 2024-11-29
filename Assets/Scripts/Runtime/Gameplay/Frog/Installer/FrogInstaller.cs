@@ -22,11 +22,12 @@ namespace Runtime.Gameplay.Frog.Installer
         {
             Container.Bind<FrogView>().FromComponentInHierarchy().AsSingle();
             Container.Bind<FrogModel>().AsSingle().WithArguments(frogModelConfig);
-            Container.BindInterfacesTo<FrogAnimationController>().AsSingle().WithArguments(frogAnimationControllerConfig);
-            Container.BindInterfacesTo<FrogTongueController>().AsSingle();
             Container.Bind<CollectablesService>().AsSingle();
             Container.Bind<RaycastService>().AsSingle();
             Container.Bind<SplineService>().AsSingle().WithArguments(splineServiceConfig);
+            
+            Container.BindInterfacesTo<FrogAnimationController>().AsSingle().WithArguments(frogAnimationControllerConfig);
+            Container.BindInterfacesTo<FrogTongueController>().AsSingle();
         }
     }
 }
