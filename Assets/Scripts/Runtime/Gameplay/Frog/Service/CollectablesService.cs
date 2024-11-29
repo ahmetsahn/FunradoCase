@@ -104,15 +104,15 @@ namespace Runtime.Gameplay.Frog.Service
                     {
                         await UniTask.Delay(TimeSpan.FromSeconds(0.28f));
                         
-                        _soundManager.PlayPopSound(AudioClipType.Pop);
-                        
                         if(i == InteractedObjects.Count - 1 && !collectable.ColorType.Equals(frogColorType))
                         {
+                            _soundManager.PlayPopSound(AudioClipType.Fail);
                             collectable.ScaleUpAndDown(true);
                             collectable.ShowErrorFeedback();
                             return;
                         }
                         
+                        _soundManager.PlayPopSound(AudioClipType.Pop);
                         collectable.ScaleUpAndDown();
                     }
                     

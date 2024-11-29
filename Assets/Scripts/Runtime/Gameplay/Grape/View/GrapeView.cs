@@ -18,6 +18,22 @@ namespace Runtime.Gameplay.Grape.View
         
         [SerializeField]
         private MeshRenderer meshRenderer;
+        
+        [SerializeField]
+        private Material failMaterial;
+        
+        private Material _defaultMaterial;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            SetDefaultMaterial();
+        }
+        
+        private void SetDefaultMaterial()
+        {
+            _defaultMaterial = meshRenderer.material;
+        }
 
         public async void ScaleUpAndDown(bool freeze = false)
         {
@@ -43,9 +59,9 @@ namespace Runtime.Gameplay.Grape.View
         {
             try
             {
-                await meshRenderer.material.DOColor(Color.red, 0.1f).AsyncWaitForCompletion();
+                meshRenderer.material = failMaterial;
                 await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-                await meshRenderer.material.DOColor(Color.white, 0.1f).AsyncWaitForCompletion();
+                meshRenderer.material = _defaultMaterial;
             }
             
             catch (Exception e)

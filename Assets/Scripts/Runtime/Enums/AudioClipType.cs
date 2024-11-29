@@ -3,6 +3,8 @@
     public enum AudioClipType
     {
         Pop = 0,
-        None = 1
+        Fail = 1,
+        Transition = 2,
+        None = 3
     }
 }

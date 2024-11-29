@@ -3,7 +3,6 @@
     public static class Constants 
     {
         public const float TONGUE_MAX_RAYCAST_DISTANCE = 10f;
-        public const float TONGUE_FIXED_Y_POSITION = 0.27f;
         public const float TONGUE_ANIMATION_DURATION = 0.25f;
         public const float SPLINE_ANIMATION_DURATION = 0.25f;
         public const float GRAPE_FIXED_Y_POSITION = 0.33f;
@@ -13,7 +12,7 @@
         public const float GRAPE_CELL_DESTROY_INTERVAL = 0.24f;
         public const float ARROW_CELL__DESTROY_INTERVAL = 0.3f;
         public const float GRAPE_INCORRECT_DELAY = 0.5f;
-        public const float COMPLETED_LEVEL_DELAY = 1f;
+        public const float COMPLETED_LEVEL_DELAY = 1.5f;
         public const float GRAPE_DEFAULT_SCALE = 0.8f;
         public const float FROG_DEFAULT_SCALE = 1;
         public const float ARROW_DEFAULT_SCALE = 0.45f;
@@ -22,5 +21,6 @@
         public const float FROG_CLICK_SCALE_UP = 1.2f;
         public const float FROG_CLICK_SCALE_DURATION = 0.1f;
         public const float CELL_SCALE_DOWN_DURATION = 0.3f;
+        public const float TONGUE_WAIT_DURATION = 0.5f;
     }
 }

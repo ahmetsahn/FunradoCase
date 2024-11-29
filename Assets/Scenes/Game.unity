@@ -654,6 +654,8 @@ MonoBehaviour:
     AudioSource: {fileID: 1524445084}
     AudioClips:
     - {fileID: 8300000, guid: 5d7df9101166bb6409775e5b7bbb4f35, type: 3}
+    - {fileID: 8300000, guid: f1b9bb574d509174b88589b3dea91b27, type: 3}
+    - {fileID: 8300000, guid: 981cc222304a9dc41bd69ead356dd8e8, type: 3}
 --- !u!114 &1516808039
 MonoBehaviour:
   m_ObjectHideFlags: 0

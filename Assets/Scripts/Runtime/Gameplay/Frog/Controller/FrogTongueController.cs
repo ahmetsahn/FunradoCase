@@ -1,5 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using Runtime.Enums;
 using Runtime.Gameplay.Frog.Model;
 using Runtime.Gameplay.Frog.Service;
 using Runtime.Gameplay.Frog.View;
@@ -25,6 +26,8 @@ namespace Runtime.Gameplay.Frog.Controller
         
         private readonly LevelManager _levelManager;
         
+        private readonly SoundManager _soundManager;
+        
         private bool _isAnimationInProgress;
 
         public FrogTongueController(
@@ -33,7 +36,8 @@ namespace Runtime.Gameplay.Frog.Controller
             RaycastService raycastService, 
             SplineService splineService, 
             CollectablesService collectablesService,
-            LevelManager levelManager)
+            LevelManager levelManager,
+            SoundManager soundManager)
         {
             _view = view;
             _model = model;
@@ -41,6 +45,7 @@ namespace Runtime.Gameplay.Frog.Controller
             _splineService = splineService;
             _collectablesService = collectablesService;
             _levelManager = levelManager;
+            _soundManager = soundManager;
 
             SubscribeEvents();
         }
@@ -116,7 +121,7 @@ namespace Runtime.Gameplay.Frog.Controller
             {
                 if (_collectablesService.IsCollectionSuccessful)
                 {
-                    await UniTask.Delay(TimeSpan.FromSeconds(Constants.GRAPE_COLLECT_DELAY));
+                    await UniTask.Delay(TimeSpan.FromSeconds(Constants.TONGUE_WAIT_DURATION));
                     CollectAndAnimateObjects();
                     _collectablesService.DestroyInteractedObjectsCell();
                     _levelManager.ReduceCountOfFrog();
@@ -126,6 +131,8 @@ namespace Runtime.Gameplay.Frog.Controller
                 {
                     await UniTask.Delay(TimeSpan.FromSeconds(Constants.GRAPE_INCORRECT_DELAY));
                 }
+                
+                _soundManager.PlayPopSound(AudioClipType.Transition);
             }
             
             catch (Exception e)
