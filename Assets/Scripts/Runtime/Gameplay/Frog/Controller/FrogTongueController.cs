@@ -62,6 +62,9 @@ namespace Runtime.Gameplay.Frog.Controller
                     return;
                 }
                 
+                SetAnimationInProgress(true);
+                _levelManager.ReduceCountOfMove();
+                
                 await _view.ScaleUpAndDown();
                 
                 BeginAnimationSequence();
@@ -95,13 +98,11 @@ namespace Runtime.Gameplay.Frog.Controller
 
         private void BeginAnimationSequence()
         {
-            SetAnimationInProgress(true);
-            _levelManager.ReduceCountOfMove();
             _view.OnTongueAnimationStart?.Invoke();
             _levelManager.RegisterFrogAnimation();
             AddStartKnotToSpline();
             DetectObjects();
-            _collectablesService.AnimateInteractedObjectsWithFeedback(_model.ColorType);
+            _collectablesService.AnimateInteractedObjectsWithFeedback(_model.Data.ColorType);
         }
 
         private void EndAnimationSequence()
@@ -167,7 +168,7 @@ namespace Runtime.Gameplay.Frog.Controller
         
         private void DetectObjects()
         {
-            bool collectionSuccess = _raycastService.RaycastAndDetectObjects(_view.transform.position, _view.transform.forward, _splineService, _collectablesService.InteractedObjects, _model.ColorType);
+            bool collectionSuccess = _raycastService.RaycastAndDetectObjects(_view.transform.position, _view.transform.forward, _splineService, _collectablesService.InteractedObjects, _model.Data.ColorType);
             _collectablesService.IsCollectionSuccessful = collectionSuccess;
         }
 

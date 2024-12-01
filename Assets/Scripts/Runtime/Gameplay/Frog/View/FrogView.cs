@@ -11,14 +11,10 @@ namespace Runtime.Gameplay.Frog.View
     public class FrogView : ScalableObject
     {
         public event Action OnClick;
-        
+        public event Action OnDestroy;
         public Action OnTongueAnimationStart;
-        
         public Action OnTongueAnimationEnd;
         
-        [SerializeField]
-        private GameObject destroyParticle;
-
         private void OnMouseDown()
         {
             OnClick?.Invoke();
@@ -53,7 +49,7 @@ namespace Runtime.Gameplay.Frog.View
             {
                 AnimateScaleToZero(transform, 0, Constants.FROG_CLICK_SCALE_DURATION);
                 await UniTask.Delay(TimeSpan.FromSeconds(Constants.FROG_CLICK_ANIMATION_DURATION));
-                DestroyParticle();
+                OnDestroy?.Invoke();
             }
             
             catch (Exception e)
@@ -65,11 +61,6 @@ namespace Runtime.Gameplay.Frog.View
         public void CellScaleDown()
         {
             AnimateScaleToZero(CellViewBelow.transform, 0, Constants.CELL_SCALE_DOWN_DURATION,true);
-        }
-        
-        private void DestroyParticle()
-        {
-            Instantiate(destroyParticle, transform.position, Quaternion.identity);
         }
     }
 }

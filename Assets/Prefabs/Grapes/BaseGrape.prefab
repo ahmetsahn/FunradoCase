@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 3657879319839282398}
   - component: {fileID: 824972263621580144}
   - component: {fileID: -7442036464795476499}
+  - component: {fileID: 5349505817450994053}
+  - component: {fileID: -4556975717342512483}
   m_Layer: 0
   m_Name: BaseGrape
   m_TagString: Untagged
@@ -120,8 +122,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ColorType>k__BackingField: 0
-  meshRenderer: {fileID: 3657879319839282398}
-  failMaterial: {fileID: 2100000, guid: bc8aa490ac59d1341964ee8b903ba237, type: 2}
+  MeshRenderer: {fileID: 3657879319839282398}
+--- !u!114 &5349505817450994053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636976548727555155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0aa8890f3c477e9907a929a662580b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grapeSo: {fileID: 11400000, guid: e66e34ac778674c4bb48e8956f26d2c7, type: 2}
+--- !u!114 &-4556975717342512483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636976548727555155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 5349505817450994053}
+  _installerPrefabs: []
+  _autoRun: 1
+  _kernel: {fileID: 0}
 --- !u!1001 &6583736401784907936
 PrefabInstance:
   m_ObjectHideFlags: 0

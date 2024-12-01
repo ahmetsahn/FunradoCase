@@ -110,7 +110,6 @@ namespace Runtime.Gameplay.Frog.Service
                         {
                             _soundManager.PlayPopSound(AudioClipType.Fail);
                             collectable.ScaleUpAndDown(true);
-                            collectable.ShowErrorFeedback();
                             return;
                         }
                         

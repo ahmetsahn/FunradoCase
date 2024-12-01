@@ -10,6 +10,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1180878610008031665, guid: f3f9a305f9b639c4196bd2660672a3bc,
         type: 3}
+      propertyPath: frogSo
+      value: 
+      objectReference: {fileID: 11400000, guid: affd3c34de89cb4478d04757cdc61668,
+        type: 2}
+    - target: {fileID: 1180878610008031665, guid: f3f9a305f9b639c4196bd2660672a3bc,
+        type: 3}
       propertyPath: frogModelConfig.ColorType
       value: 2
       objectReference: {fileID: 0}

@@ -7,7 +7,5 @@ namespace Runtime.Core.Interface
         public Transform Transform { get; }
         
         public void ScaleUpAndDown(bool freeze = false);
-        
-        public void ShowErrorFeedback();
     }
 }

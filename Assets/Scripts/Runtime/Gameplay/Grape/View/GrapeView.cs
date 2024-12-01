@@ -14,26 +14,11 @@ namespace Runtime.Gameplay.Grape.View
         [field: SerializeField]
         public ColorType ColorType { get; set; }
         
-        [SerializeField]
-        private MeshRenderer meshRenderer;
-        
-        [SerializeField]
-        private Material failMaterial;
+        public event Action OnShowErrorFeedback;
+
+        public MeshRenderer MeshRenderer;
 
         public Transform Transform => transform;
-        
-        private Material _defaultMaterial;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            SetDefaultMaterial();
-        }
-        
-        private void SetDefaultMaterial()
-        {
-            _defaultMaterial = meshRenderer.material;
-        }
 
         public async void ScaleUpAndDown(bool freeze = false)
         {
@@ -43,25 +28,11 @@ namespace Runtime.Gameplay.Grape.View
             
                 if (freeze)
                 {
+                    OnShowErrorFeedback?.Invoke();
                     await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
                 }
             
                 await transform.DOScale(0.8f, 0.1f).SetEase(Ease.Linear).AsyncWaitForCompletion();
-            }
-            
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-            }
-        }
-        
-        public async void ShowErrorFeedback()
-        {
-            try
-            {
-                meshRenderer.material = failMaterial;
-                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-                meshRenderer.material = _defaultMaterial;
             }
             
             catch (Exception e)

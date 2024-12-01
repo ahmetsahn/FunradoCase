@@ -1,25 +1,20 @@
 ﻿using System;
 using Runtime.Enums;
+using Runtime.Gameplay.Frog.Model.Scriptable;
 using UnityEngine;
 
 namespace Runtime.Gameplay.Frog.Model
 {
     public class FrogModel
     {
-        public ColorType ColorType;
-        
         public readonly int AnimationHashMouthOpen = Animator.StringToHash("MouthOpen");
         public readonly int AnimationHashMouthClose = Animator.StringToHash("MouthClose");
+
+        public FrogSo Data;
         
-        public FrogModel(FrogModelConfig config)
+        public FrogModel(FrogSo data)
         {
-            ColorType = config.ColorType;
+            Data = data;
         }
-    }
-    
-    [Serializable]
-    public struct FrogModelConfig
-    {
-        public ColorType ColorType;
     }
 }
