@@ -12,6 +12,8 @@ namespace Runtime.Managers
         private readonly SignalBus _signalBus;
 
         private int _currentLevelIndex;
+
+        private const int MAX_LEVEL = 4;
         
         public GameManager(SaveManager saveManager, SignalBus signalBus)
         {
@@ -71,7 +73,7 @@ namespace Runtime.Managers
         {
             _currentLevelIndex++;
             
-            if (_currentLevelIndex >= 3)
+            if (_currentLevelIndex >= MAX_LEVEL)
             {
                 _currentLevelIndex = 0;
             }
