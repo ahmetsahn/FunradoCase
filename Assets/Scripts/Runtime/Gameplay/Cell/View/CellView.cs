@@ -20,6 +20,11 @@ namespace Runtime.Gameplay.Cell.View
         {
             childObject.SetActive(true);
         }
+
+        public void SetChildObject(GameObject childObj)
+        {
+            childObject = childObj;
+        }
         
         private bool IsEmpty()
         {

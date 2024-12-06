@@ -162,7 +162,7 @@ namespace Runtime.Gameplay.Frog.Controller
         
         private void AddStartKnotToSpline()
         {
-            var position = new Vector3(_view.transform.position.x, Constants.GRAPE_FIXED_Y_POSITION, _view.transform.position.z);
+            var position = new Vector3(_view.transform.position.x, _view.transform.position.y + Constants.TONGUE_START_HEIGHT, _view.transform.position.z);
             _splineService.AddKnot(position);
         }
         
@@ -181,7 +181,7 @@ namespace Runtime.Gameplay.Frog.Controller
 
         private void CollectAndAnimateObjects()
         {
-            _collectablesService.AnimateCollectablesAlongPath(_splineService.GetSplinePointsReverse(), _splineService.SplineContainer);
+            _collectablesService.AnimateCollectablesAlongPath(_splineService.GetSplinePointsReverse(_view.transform.position), _splineService.SplineContainer);
             float animationDuration = _splineService.SplineContainer.Spline.Count * Constants.SPLINE_ANIMATION_DURATION;
             _splineService.AnimateSplineRange(0, animationDuration);
         }

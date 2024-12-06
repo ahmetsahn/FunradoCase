@@ -42,7 +42,7 @@ namespace Runtime.Gameplay.Frog.Service
                 }).SetEase(Ease.Linear);
         }
 
-        public List<Vector3> GetSplinePointsReverse()
+        public List<Vector3> GetSplinePointsReverse(Vector3 frogTransform)
         {
             int pointCount = SplineContainer.Spline.Count;
             List<Vector3> positions = new List<Vector3>(pointCount);
@@ -51,7 +51,7 @@ namespace Runtime.Gameplay.Frog.Service
             {
                 var newPos = new Vector3(
                     SplineContainer.Spline[i].Position.x,
-                    Constants.GRAPE_FIXED_Y_POSITION,
+                    frogTransform.y + Constants.TONGUE_START_HEIGHT,
                     SplineContainer.Spline[i].Position.z
                 );
                 positions.Add(newPos);

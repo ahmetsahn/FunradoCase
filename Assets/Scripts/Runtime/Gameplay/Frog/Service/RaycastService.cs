@@ -32,7 +32,7 @@ namespace Runtime.Gameplay.Frog.Service
                     break;
                 }
                 
-                splineService.AddKnot(hit.GetFixedPosition());
+                splineService.AddKnot(hit.GetFixedPosition(startPosition));
                 interactedObjects.Add(interactable);
                 
                 if (interactable.ColorType != frogColorType)
@@ -43,7 +43,7 @@ namespace Runtime.Gameplay.Frog.Service
                 if (arrow != null)
                 {
                     var newRayDirection = arrow.DirectionType.GetNewRayDirection();
-                    var newStartPosition = hit.GetFixedPosition();
+                    var newStartPosition = hit.GetFixedPosition(newRayDirection);
                     return RaycastAndDetectObjects(newStartPosition, newRayDirection, splineService, interactedObjects, frogColorType);
                 }
             }

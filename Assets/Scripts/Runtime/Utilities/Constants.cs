@@ -22,5 +22,6 @@
         public const float FROG_CLICK_SCALE_DURATION = 0.1f;
         public const float CELL_SCALE_DOWN_DURATION = 0.3f;
         public const float TONGUE_WAIT_DURATION = 0.5f;
+        public const float TONGUE_START_HEIGHT = 0.1f;
     }
 }

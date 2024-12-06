@@ -1862,8 +1862,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43edf76fe0387194aadd0ca64f3c81ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyParticle: {fileID: 4194666510294521923, guid: 9a9c139dfbd087d4b887da7cf5e89b57,
-    type: 3}
 --- !u!114 &1180878610008031665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1881,9 +1879,7 @@ MonoBehaviour:
   splineServiceConfig:
     TongueSplinePrefab: {fileID: 8331714317268829937, guid: b77bac96204b78440ae32cf20ba412af,
       type: 3}
-  frogModelConfig:
-    ColorType: 0
-    RaycastMaxDistance: 10
+  frogSo: {fileID: 0}
 --- !u!114 &-6507616244317558068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1942,8 +1938,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8, y: 0.5, z: 0.8}
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Size: {x: 0.8, y: 0.42474398, z: 0.8}
+  m_Center: {x: 0, y: 0.137628, z: 0}
 --- !u!54 &-4000133402805701201
 Rigidbody:
   m_ObjectHideFlags: 0
