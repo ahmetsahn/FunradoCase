@@ -1,6 +1,8 @@
 ﻿using System;
 using Runtime.Signal;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 using Object = UnityEngine.Object;
 
@@ -12,14 +14,15 @@ namespace Runtime.Managers
         
         private readonly IInstantiator _instantiator;
         
-        private const string LEVEL_PREFAB_PATH = "Levels/Level ";
+        private readonly AssetReferenceGameObject[] _levelPrefabs;
 
         private GameObject _currentLevelInstance;
         
-        public LevelLoader(SignalBus signalBus, IInstantiator instantiator)
+        public LevelLoader(SignalBus signalBus, IInstantiator instantiator, LevelLoaderConfig config)
         {
             _signalBus = signalBus;
             _instantiator = instantiator;
+            _levelPrefabs = config.LevelPrefabs;
             
             SubscribeEvents();
         }
@@ -32,21 +35,20 @@ namespace Runtime.Managers
 
         private void OnLoadLevel(LoadLevelSignal signal) 
         {
-            if (_currentLevelInstance != null) 
+            if (_currentLevelInstance != null)
             {
-                Object.Destroy(_currentLevelInstance);
+                _signalBus.Fire(new DestroyCurrentLevelSignal());
             }
             
-            string levelPath = $"{LEVEL_PREFAB_PATH}{signal.LevelIndex}";
-            GameObject levelPrefab = Resources.Load<GameObject>(levelPath);
-
-            if (levelPrefab != null)
-            {
-                _currentLevelInstance = _instantiator.InstantiatePrefab(levelPrefab);
-            } 
+            Addressables.LoadAssetAsync<GameObject>(_levelPrefabs[signal.LevelIndex]).Completed += OnAddressableLoaded;
         }
         
-        private void OnDestroyCurrentLevel()
+        private void OnAddressableLoaded(AsyncOperationHandle<GameObject> levelPrefab)
+        {
+            _currentLevelInstance = _instantiator.InstantiatePrefab(levelPrefab.Result);
+        }
+        
+        private void OnDestroyCurrentLevel(DestroyCurrentLevelSignal signal)
         {
             if (_currentLevelInstance != null)
             {
@@ -64,5 +66,11 @@ namespace Runtime.Managers
         {
             UnsubscribeEvents();
         }
+    }
+    
+    [Serializable]
+    public class LevelLoaderConfig
+    {
+        public AssetReferenceGameObject[] LevelPrefabs;
     }
 }

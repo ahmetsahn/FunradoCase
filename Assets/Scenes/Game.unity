@@ -628,8 +628,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365e9648427b400fa438cb8cacbf915b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManagerConfig:
+    MaxLevel: 4
   levelManagerConfig:
     LevelDataListSo: {fileID: 11400000, guid: 4093791f195d8d94bb30c8b712b1126b, type: 2}
+  levelLoaderConfig:
+    LevelPrefabs:
+    - m_AssetGUID: 1f61fe7961c222c448ffbdf7588a8599
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 0c711b41056be2c4cb341a63205d086f
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: f31a4aa6caaaa2b4e9c6e2d64fee9e4f
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 548e0c666cae51443a1586d1a686444e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   uiManagerConfig:
     PanelPrefabs:
       _serializedList:

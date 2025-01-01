@@ -62,5 +62,11 @@ namespace Runtime.Gameplay.Frog.View
         {
             AnimateScaleToZero(CellViewBelow.transform, 0, Constants.CELL_SCALE_DOWN_DURATION,true);
         }
+
+        private void OnDrawGizmos()
+        {
+            // start position = vector3(1,0.432,0), direction = vector3(0,0,1), distance = 10
+            Gizmos.DrawRay(new Vector3(1, 0.432f, 0), new Vector3(0, 0, 1) * Constants.TONGUE_MAX_RAYCAST_DISTANCE);
+        }
     }
 }

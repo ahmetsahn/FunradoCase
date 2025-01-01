@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using AYellowpaper.SerializedCollections;
 using Runtime.Data.Scriptable;
@@ -46,7 +46,7 @@ namespace Editor
 
         private Stack<(Vector2Int cell, GameObject prefab, ObjectType type, float yValue)> undoStack = new();
 
-        [SerializeField] private int gridSize = 10;
+        [SerializeField] private int gridSize = 5;
 
         private readonly Vector2 cellSize = new Vector2(122, 122);
         private Vector2Int? selectedCellKey = null;
@@ -180,12 +180,15 @@ namespace Editor
 
                     else
                     {
+                        newPrefab.SetActive(false);
+                        
                         if (Physics.Raycast(newPrefab.transform.position, Vector3.down, out RaycastHit hit, 1))
                         {
-                            hit.transform.GetComponent<CellView>().SetChildObject(newPrefab);
+                            if(hit.transform.TryGetComponent(out CellView cellView))
+                            {
+                                cellView.SetChildObject(newPrefab);
+                            }
                         }
-                        
-                        newPrefab.SetActive(false);
                     }
                 }
                 else
@@ -276,7 +279,7 @@ namespace Editor
                 Debug.LogError("LevelDataListSo reference is not set.");
             }
 
-            string folderPath = "Assets/Resources/Levels/";
+            string folderPath = "Assets/Addressables/Levels/";
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);

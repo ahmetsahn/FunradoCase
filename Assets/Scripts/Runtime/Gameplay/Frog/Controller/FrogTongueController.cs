@@ -168,7 +168,9 @@ namespace Runtime.Gameplay.Frog.Controller
         
         private void DetectObjects()
         {
-            bool collectionSuccess = _raycastService.RaycastAndDetectObjects(_view.transform.position, _view.transform.forward, _splineService, _collectablesService.InteractedObjects, _model.Data.ColorType);
+            var fixedY = _view.transform.position.y + Constants.TONGUE_START_HEIGHT;
+            var fixedPosition = new Vector3(_view.transform.position.x, fixedY, _view.transform.position.z);
+            bool collectionSuccess = _raycastService.RaycastAndDetectObjects(fixedPosition, _view.transform.forward, _splineService, _collectablesService.InteractedObjects, _model.Data.ColorType);
             _collectablesService.IsCollectionSuccessful = collectionSuccess;
         }
 

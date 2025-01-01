@@ -1,4 +1,5 @@
 ﻿using System;
+using Ahmet.ObjectPool;
 using Runtime.Gameplay.Frog.Model;
 using Runtime.Gameplay.Frog.View;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace Runtime.Gameplay.Frog.Controller
         
         private void OnDestroy()
         {
-            Object.Instantiate(_model.Data.DestroyParticle, _view.transform.position, Quaternion.identity);
+            ObjectPoolManager.SpawnObject(_model.Data.DestroyParticle, _view.transform.position, Quaternion.identity);
         }
         
         private void UnsubscribeEvents()

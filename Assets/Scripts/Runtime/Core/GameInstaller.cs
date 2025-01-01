@@ -1,4 +1,5 @@
-﻿using Runtime.Managers;
+﻿using Ahmet.ObjectPool;
+using Runtime.Managers;
 using Runtime.Signal;
 using Runtime.UI;
 using UnityEngine;
@@ -10,7 +11,13 @@ namespace Runtime.Core
     public class GameInstaller : MonoInstaller
     {
         [SerializeField]
+        private GameManagerConfig gameManagerConfig;
+        
+        [SerializeField]
         private LevelManagerConfig levelManagerConfig;
+        
+        [SerializeField]
+        private LevelLoaderConfig levelLoaderConfig;
         
         [SerializeField]
         private UIManagerConfig uiManagerConfig;
@@ -26,13 +33,15 @@ namespace Runtime.Core
         
         private void BindServices()
         {
-            Container.BindInterfacesTo<LevelLoader>().AsSingle();
-            Container.BindInterfacesTo<UIManager>().AsSingle().WithArguments(uiManagerConfig);
+            Container.Bind<ObjectPoolManager>().AsSingle();
             
-            Container.BindInterfacesAndSelfTo<LevelManager>().AsSingle().WithArguments(levelManagerConfig);
-            Container.BindInterfacesAndSelfTo<GameManager>().AsSingle();
-            Container.BindInterfacesAndSelfTo<SoundManager>().AsSingle().WithArguments(soundManagerConfig);
             Container.BindInterfacesAndSelfTo<SaveManager>().AsSingle();
+            
+            Container.BindInterfacesTo<LevelLoader>().AsSingle().WithArguments(levelLoaderConfig);
+            Container.BindInterfacesTo<UIManager>().AsSingle().WithArguments(uiManagerConfig);
+            Container.BindInterfacesAndSelfTo<LevelManager>().AsSingle().WithArguments(levelManagerConfig);
+            Container.BindInterfacesAndSelfTo<GameManager>().AsSingle().WithArguments(gameManagerConfig);
+            Container.BindInterfacesAndSelfTo<SoundManager>().AsSingle().WithArguments(soundManagerConfig);
         }
         
         private void BindSignals()

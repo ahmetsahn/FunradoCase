@@ -13,12 +13,13 @@ namespace Runtime.Managers
 
         private int _currentLevelIndex;
 
-        private const int MAX_LEVEL = 4;
+        private int _maxLevel;
         
-        public GameManager(SaveManager saveManager, SignalBus signalBus)
+        public GameManager(SaveManager saveManager, SignalBus signalBus, GameManagerConfig config)
         {
             _saveManager = saveManager;
             _signalBus = signalBus;
+            _maxLevel = config.MaxLevel;
             _currentLevelIndex = _saveManager.LoadLevelIndex();
             
             SubscribeEvents();
@@ -73,7 +74,7 @@ namespace Runtime.Managers
         {
             _currentLevelIndex++;
             
-            if (_currentLevelIndex >= MAX_LEVEL)
+            if (_currentLevelIndex >= _maxLevel)
             {
                 _currentLevelIndex = 0;
             }
@@ -88,5 +89,11 @@ namespace Runtime.Managers
         {
             UnsubscribeEvents();
         }
+    }
+
+    [Serializable]
+    public class GameManagerConfig
+    {
+        public int MaxLevel;
     }
 }

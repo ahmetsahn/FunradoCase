@@ -43,7 +43,7 @@ namespace Runtime.Gameplay.Frog.Service
                 if (arrow != null)
                 {
                     var newRayDirection = arrow.DirectionType.GetNewRayDirection();
-                    var newStartPosition = hit.GetFixedPosition(newRayDirection);
+                    var newStartPosition = hit.GetFixedPosition(startPosition);
                     return RaycastAndDetectObjects(newStartPosition, newRayDirection, splineService, interactedObjects, frogColorType);
                 }
             }
