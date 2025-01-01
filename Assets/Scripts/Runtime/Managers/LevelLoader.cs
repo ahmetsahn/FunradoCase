@@ -53,6 +53,7 @@ namespace Runtime.Managers
             if (_currentLevelInstance != null)
             {
                 Object.Destroy(_currentLevelInstance);
+                Addressables.ReleaseInstance(_currentLevelInstance);
             }
         }
         
